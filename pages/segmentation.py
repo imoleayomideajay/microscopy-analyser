@@ -1,14 +1,8 @@
 import streamlit as st
 import numpy as np
+import io
 from utils.image_io import load_image
-from utils.segmentation import (
-    correct_background,
-    apply_threshold,
-    get_threshold_methods,
-    segment_and_label,
-    overlay_segmentation,
-    compute_segmentation_stats,
-)
+from utils.segmentation import get_threshold_methods
 
 def render():
     st.markdown("## ✂️ Image Segmentation")
@@ -48,14 +42,18 @@ def render():
         uploaded = st.file_uploader("Upload microscopy image", type=["tif", "tiff", "png", "jpg", "jpeg"], key="seg_upload")
 
         if uploaded:
-            img_gray, img_rgb = load_image(uploaded)
+            file_bytes = uploaded.read()
+            from utils.image_io import load_image
+            import io
+            img_gray, img_rgb = load_image(io.BytesIO(file_bytes))
 
-            # Run pipeline
-            corrected = correct_background(img_gray, ball_radius) if bg_correct else img_gray
-            binary, thresh_val = apply_threshold(corrected, method, sigma, manual_thresh, invert)
-            labeled, n_objects = segment_and_label(binary, min_size, fill_holes)
-            overlay = overlay_segmentation(img_rgb, labeled, n_objects)
-            stats = compute_segmentation_stats(labeled, n_objects)
+            # Run pipeline (cached)
+            from utils.cache import cached_segment
+            with st.spinner("Segmenting…"):
+                binary, labeled, n_objects, overlay, stats, thresh_val = cached_segment(
+                    file_bytes, method, sigma, manual_thresh, invert,
+                    ball_radius, bg_correct, min_size, fill_holes
+                )
 
             tab_orig, tab_binary, tab_overlay = st.tabs(["Original", "Binary mask", "Labelled overlay"])
             with tab_orig:

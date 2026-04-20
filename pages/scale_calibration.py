@@ -3,12 +3,7 @@ import numpy as np
 from PIL import Image
 import io
 from utils.image_io import load_image, make_download_bytes
-from utils.scale import (
-    detect_scale_bar,
-    apply_calibration,
-    measure_objects_calibrated,
-    draw_scale_overlay,
-)
+from utils.cache import cached_measure_calibrated, cached_detect_scale_bar
 
 def render():
     st.markdown("## 📐 Scale Calibration")
@@ -47,18 +42,20 @@ def render():
         uploaded = st.file_uploader("Upload microscopy image", type=["tif", "tiff", "png", "jpg", "jpeg"], key="scale_upload")
 
         if uploaded:
-            img_gray, img_rgb = load_image(uploaded)
+            file_bytes = uploaded.read()
 
             if method == "Scale bar detection":
-                px_size, bar_rect = detect_scale_bar(img_gray, known_length)
+                px_size, bar_rect = cached_detect_scale_bar(file_bytes, known_length)
                 if px_size:
                     st.success(f"Scale bar detected → **{px_size:.4f} {unit}/pixel**")
                 else:
                     st.warning("Scale bar not detected — falling back to 0.1 µm/pixel. Set manually.")
                     px_size = 0.1
 
-            overlay, measurements = measure_objects_calibrated(img_gray, img_rgb.copy(), px_size, unit, min_area_px, max_area_px)
-            overlay = draw_scale_overlay(overlay, px_size, unit)
+            with st.spinner("Measuring objects…"):
+                overlay, measurements = cached_measure_calibrated(
+                    file_bytes, px_size, unit, min_area_px, max_area_px
+                )
 
             tab_img, tab_data = st.tabs(["Annotated image", "Measurements"])
             with tab_img:

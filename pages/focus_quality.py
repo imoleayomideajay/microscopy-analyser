@@ -1,12 +1,6 @@
 import streamlit as st
 import numpy as np
-from utils.image_io import load_image
-from utils.focus import (
-    compute_focus_map,
-    flag_blurry_regions,
-    global_focus_metrics,
-    annotate_focus_map,
-)
+import io
 
 def render():
     st.markdown("## 🎯 Focus Quality Assessment")
@@ -42,13 +36,18 @@ def render():
         uploaded = st.file_uploader("Upload microscopy image", type=["tif","tiff","png","jpg","jpeg"], key="focus_upload")
 
         if uploaded:
-            img_gray, img_rgb = load_image(uploaded)
+            file_bytes = uploaded.read()
+            from utils.cache import cached_focus_map
+            from utils.focus import flag_blurry_regions, annotate_focus_map
 
-            focus_map, tile_scores = compute_focus_map(img_gray, metric, tile_size)
+            with st.spinner("Computing focus map…"):
+                focus_map, tile_scores, g_metrics, img_rgb = cached_focus_map(
+                    file_bytes, metric, tile_size
+                )
+
             blurry_mask = flag_blurry_regions(tile_scores, blur_threshold)
             annotated = annotate_focus_map(img_rgb.copy(), focus_map, blurry_mask,
                                            tile_size, cmap, show_grid, show_flagged)
-            g_metrics = global_focus_metrics(img_gray)
 
             tab_heatmap, tab_orig, tab_hist = st.tabs(["Focus heatmap", "Original", "Score distribution"])
 
