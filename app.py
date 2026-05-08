@@ -10,46 +10,47 @@ st.set_page_config(
 # Inject global CSS
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 html, body, [class*="css"] {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #1f2937;
 }
 code, .stCode, pre {
-    font-family: 'DM Mono', monospace !important;
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace !important;
 }
 
 /* Sidebar */
 [data-testid="stSidebar"] {
-    background: #0a0a0f;
-    border-right: 1px solid #1e1e2e;
+    background: #f8fafc;
+    border-right: 1px solid #e2e8f0;
 }
 [data-testid="stSidebar"] * {
-    color: #c8c8d8 !important;
+    color: #1f2937 !important;
 }
 [data-testid="stSidebar"] .stRadio label {
-    font-size: 0.85rem;
+    font-size: 0.92rem;
 }
 
 /* Main background */
 .stApp {
-    background: #06060c;
+    background: #ffffff;
 }
 
 /* Cards */
 .problem-card {
-    background: #0f0f1a;
-    border: 1px solid #1e1e35;
+    background: #ffffff;
+    border: 1px solid #d1d5db;
     border-radius: 12px;
     padding: 1.2rem 1.4rem;
     margin-bottom: 0.8rem;
     transition: border-color 0.2s;
 }
 .problem-card:hover {
-    border-color: #3d3d6e;
+    border-color: #2563eb;
 }
 .problem-card h4 {
-    color: #a0a8ff;
+    color: #1d4ed8;
     margin: 0 0 0.3rem 0;
     font-size: 0.95rem;
     font-weight: 700;
@@ -57,8 +58,8 @@ code, .stCode, pre {
     text-transform: uppercase;
 }
 .problem-card p {
-    color: #7878a0;
-    font-size: 0.82rem;
+    color: #334155;
+    font-size: 0.95rem;
     margin: 0;
     line-height: 1.5;
 }
@@ -66,87 +67,87 @@ code, .stCode, pre {
 /* Metric chips */
 .metric-chip {
     display: inline-block;
-    background: #13132a;
-    border: 1px solid #2a2a50;
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
     border-radius: 6px;
     padding: 0.25rem 0.65rem;
-    font-size: 0.78rem;
-    color: #8888cc;
-    font-family: 'DM Mono', monospace;
+    font-size: 0.82rem;
+    color: #1e3a8a;
+    font-family: 'JetBrains Mono', monospace;
     margin: 0.2rem 0.2rem 0 0;
 }
 
 /* Headings */
 h1, h2, h3 {
-    color: #e8e8ff !important;
-    font-family: 'Syne', sans-serif !important;
-    font-weight: 800 !important;
+    color: #111827 !important;
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 700 !important;
 }
 
 /* Buttons */
 .stButton > button {
-    background: #1e1e3f;
-    color: #a0a8ff;
-    border: 1px solid #3030608c;
+    background: #2563eb;
+    color: #ffffff;
+    border: 1px solid #1d4ed8;
     border-radius: 8px;
-    font-family: 'Syne', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-weight: 600;
-    font-size: 0.85rem;
-    letter-spacing: 0.03em;
+    font-size: 0.92rem;
+    letter-spacing: 0.01em;
     padding: 0.5rem 1.2rem;
     transition: all 0.2s;
 }
 .stButton > button:hover {
-    background: #2a2a5e;
-    border-color: #6060c0;
-    color: #d0d4ff;
+    background: #1d4ed8;
+    border-color: #1e40af;
+    color: #ffffff;
 }
 
 /* File uploader */
 [data-testid="stFileUploader"] {
-    background: #0f0f1a;
-    border: 1.5px dashed #2a2a50;
+    background: #f8fafc;
+    border: 1.5px dashed #94a3b8;
     border-radius: 12px;
 }
 
 /* Sliders */
 .stSlider > div > div > div {
-    background: #a0a8ff !important;
+    background: #2563eb !important;
 }
 
 /* Tabs */
 .stTabs [data-baseweb="tab"] {
     background: transparent;
-    color: #6868a0;
-    font-family: 'Syne', sans-serif;
+    color: #475569;
+    font-family: 'Inter', sans-serif;
     font-weight: 600;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     border-bottom: 2px solid transparent;
 }
 .stTabs [aria-selected="true"] {
-    color: #a0a8ff !important;
-    border-bottom: 2px solid #a0a8ff !important;
+    color: #1d4ed8 !important;
+    border-bottom: 2px solid #1d4ed8 !important;
     background: transparent !important;
 }
 
 /* Divider */
 hr {
-    border-color: #1e1e35 !important;
+    border-color: #e5e7eb !important;
 }
 
 /* Captions / small text */
 .stCaption, small, [data-testid="stMarkdownContainer"] p {
-    color: #6868a0 !important;
+    color: #475569 !important;
 }
 
 /* Success / info boxes */
 .stSuccess {
-    background: #0a1a0a;
-    border-color: #2a602a;
+    background: #ecfdf5;
+    border-color: #10b981;
 }
 .stInfo {
-    background: #0a0a1a;
-    border-color: #2a2a6a;
+    background: #eff6ff;
+    border-color: #3b82f6;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -154,9 +155,9 @@ hr {
 # ── Sidebar ───────────────────────────────────────────────
 with st.sidebar:
     st.markdown("## 🔬 MicroAnalyser")
-    st.markdown("<p style='color:#4a4a78; font-size:0.78rem; margin-top:-0.5rem;'>Microscopy image analysis toolkit</p>", unsafe_allow_html=True)
+    st.markdown("<p style='color:#475569; font-size:0.86rem; margin-top:-0.3rem;'>Microscopy image analysis toolkit</p>", unsafe_allow_html=True)
     st.markdown("---")
-    st.markdown("<p style='color:#4a4a78; font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase;'>Analysis Modules</p>", unsafe_allow_html=True)
+    st.markdown("<p style='color:#334155; font-size:0.78rem; letter-spacing:0.03em; text-transform:uppercase;'>Analysis modules</p>", unsafe_allow_html=True)
 
     pages = {
         "🏠  Home": "home",
@@ -168,16 +169,16 @@ with st.sidebar:
         "🧬  Cellpose (DL)": "cellpose",
         "🗂️  Batch Processing": "batch",
     }
-    choice = st.radio("", list(pages.keys()), label_visibility="collapsed")
+    choice = st.radio("Choose an analysis module", list(pages.keys()), label_visibility="collapsed")
     active = pages[choice]
 
     st.markdown("---")
     st.markdown("""
-    <div style='font-size:0.72rem; color:#3a3a60; line-height:1.7;'>
-    <b style='color:#4a4a80;'>About</b><br>
+    <div style='font-size:0.82rem; color:#334155; line-height:1.6;'>
+    <b style='color:#1f2937;'>About</b><br>
     Tackles the 5 core problems in<br>
     microscopy image quantification.<br><br>
-    <b style='color:#4a4a80;'>New</b><br>
+    <b style='color:#1f2937;'>New</b><br>
     🧬 Cellpose deep-learning seg.<br>
     🗂️ Batch pipeline (multi-image)<br>
     ⚡ All modules cached for speed
